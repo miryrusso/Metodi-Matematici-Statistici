@@ -1,0 +1,113 @@
+Come si usano le distribuzioni: 
+    - Uniforme : esiti eventi equiprobabili 
+    - Bernoulli : schema vero-falso, successo-insucesso 
+    - Binomiale : molto esperimenti di Bernoulli con alta probabilità
+    - Poisson : eventi rari 
+    - Geometrica : numero di prove per il primo successo
+    - Ipergeometrica : successi in una popolazione con reinserimento 
+    - Multinomiale : Estende la binomiale a piu categorie
+    - Normale : curva di tipo gaussiana con picco nel valore medio
+    - Chi-Quadro : solo valori positivi 
+    - Esponenziale : dati che cambiano rapidamente 
+
+Esercizi
+Deviazione = radice di varianza
+Librerie
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.stats import norm, t, binom, hypergeom, poisson
+    
+Binomiale 
+    binom.sf(k,n,p) <- Calcola la probabilità che il valore sia > k 
+    binom.cdf(k, n, p) <- Probabilità cumulativa che il valore sia <= k
+    binom.pmf(k,n,p) <- Probabilità che il valore sia esattamente = k
+
+Distribuzione normale : 
+    - Data media e deviazione standard calcolare percent. 
+        - valore minore di k : p = norm.cdf(k, media, deviazione)
+        - valore maggiore di k : p = 1-norm.cdf(k, media, deviazione)
+
+Regressione Lineare :
+    Coefficente di correlazione: radice di R2
+    Si scriva l’equazione della retta di regressione;
+        y_0 = b_0 + b_1 * X
+    Grafico
+        plt.plot(X, Y, "*")
+        xx = np.linspace(100,700,1000)
+        yy = b_0 + b_1*xx
+        plt.plot(xx,yy)
+        plt.show()
+
+print("La retta di regressione è pari a y = ", b_0, " +", b_1," * x")
+Test con media e varianza nota: 
+    #Ipotesi nulla       H_0: mu = mu_0
+    #Ipotesi alternativa H_1: mu < mu_0
+
+    mu_0 = 35 mu = 33.1 sig = 4.3 n = 20 alpha = 0.05
+    phi = norm.ppf(alpha)
+    Z_0 = (mu-mu_0)/sig*np.sqrt(n)
+
+    if(Z_0 < phi):
+        print("Poiché Z_0 < phi si rigetta l'ipotesi nulla. Quindi, si afferma che c'è stato un miglioramento nelle prestazioni degli studenti con un livello di significatività del 5%.")
+    else:
+        print("Poiché Z_0 > phi, non si hanno elementi a suffcienza per rigettare l'ipotesi nulla.")
+
+Box-plot
+    # crea box_plot
+    fig, ax = plt.subplots(1, 1)
+
+    ax.boxplot(X)
+    plt.show()
+
+Poisson 
+    mu = pow(10,4)
+    p = 3 * pow(10,-5)
+    q = 0.1
+
+    lam = mu*p*q (n*p)
+    display(poisson.sf(1,lam))
+
+    Oppure: 
+    mu = 10
+    n = 15
+    lamda = mu * 2
+    pi = poisson.sf(15, lamda)
+    display(pi)
+
+Ipergeomtrica
+    import numpy as np 
+    from scipy.stats import hypergeom
+    p = hypergeom.cdf(estrarne al piu 2 bianche,totale, totale bianche, quante estrazioni)
+
+
+Esercizi di Probabilità
+### Esercizio 1
+Si esaminano 50 pezzi prodotti da due macchine (che indichiamo con A e B) e si contano 
+i pezzi difettosi. I risultati sono i seguenti:  
+![image.png](attachment:image.png)
+1. Si calcoli la probabilità che un pezzo scelto a caso sia difettoso;
+2. Si calcoli la probabilità che un pezzo scelto a caso tra quelli difettosi provenga dalla macchina B;
+3. Si dica, giustificando la risposta, se gli eventi “il pezzo è difettoso” e “il pezzo proviene dalla macchina A” si possono ritenere indipendenti;
+4. Come si può stabilire se una macchina è preferibile all’altra?
+Soluzione
+    PDA = 4/20
+    PDB = 6/30
+    PA = 20/50
+    PB = 30/50
+
+    #teorema delle probabilità totali
+    p1 = PDA*PA + PDB*PB
+    print("Probabilità che un pezzo scelto a caso sia difettoso:",p1)
+
+    #P(B|D) = P(D|B) * P(B) / P(D)
+    p2 = PDB * PB / p1
+    print("Probabilità che un pezzo scelto a caso tra quelli difettosi provenga da B:",p2)
+
+Geometrica : 
+    probabilita = 0.80
+    numero_prove = 10
+    medio_prove = 1/probabilita
+    display(medio_prove)
+    sigma = np.sqrt((1-probabilita)/probabilita**2)
+    p = pow(1-probabilita,numero_prove)
+    display(p)
